@@ -8,7 +8,7 @@ pipeline {
             }
         }
         
-        stage () {
+        stage ('input') {
             steps {
                 input 'please input something'
             }
