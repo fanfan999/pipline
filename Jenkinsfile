@@ -4,7 +4,7 @@ pipeline {
         skipStagesAfterUnstable()
     }
     tools {
-        maven 'apache-maven-3.0.1'
+        maven 'maven3.6.2'
     }
     
     stages {
@@ -17,8 +17,6 @@ pipeline {
         stage ('Test') {
             steps {
               echo 'Testing'
-            }
-            steps {
                 sh 'mvn --version'
             }
         }
