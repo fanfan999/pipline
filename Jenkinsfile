@@ -7,6 +7,12 @@ pipeline {
                 sh 'ls'
             }
         }
+        
+        stage () {
+            steps {
+                input 'please input something'
+            }
+        }
     }
     
     post{
@@ -21,13 +27,10 @@ pipeline {
                 body: 'Everything is ok with ${env.BUILD_URL}'
         }
         unstable {
-            echo 'I failed'
+            echo 'Tests failed'
         }
         failure {
-            mail to: 'lei.fan@capgemini.com',
-                subject: 'Failed Pipline: ${currentBuild.fullDisplayName}',
-                body: 'Something is wrong with ${env.BUILD_URL}'
-            
+            echo 'Process failed'   
         }
         changed {
             echo 'Things were different before...'
