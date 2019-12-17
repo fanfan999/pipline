@@ -13,7 +13,8 @@ pipeline {
 	}
 
     parameters {
-         booleanParam(name: 'Confirm', choices: ['false','true'], defaultValue: true, description: 'Being Sure to begin pipeline') 
+         booleanParam(name: 'Confirm', defaultValue: true, description: 'Being Sure to begin pipeline')
+         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
     }
 	
 	stages {
