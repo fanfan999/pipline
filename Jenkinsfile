@@ -6,7 +6,7 @@ pipeline {
 		
 		timeout(time:1, unit:'HOURS')
 
-        	timestapmps()
+        	timestamps()
 	}
 	
 	environment {
@@ -53,10 +53,6 @@ pipeline {
 			}
 			
 			steps {
-                		input {
-					message "Deploy for deployment?"
-					ok "yes"
-			    	}
 				echo 'This deploy process is for development'
 			}
 			
@@ -68,10 +64,13 @@ pipeline {
 			}
 			 
 			steps {
-                		input {
-					message "Deploy for production？"
-					ok "yes"
-			    	}
+				script {
+					input {
+						message "Deploy for production？"
+						ok "yes"
+			    		}
+				}
+
 				echo 'This process is for production'
 			}
 		}
