@@ -41,21 +41,21 @@ pipeline {
 		
 		stage('Deploy for production') {
 			when {
-				expression {
-                    BRANCH_NAME == ~ /(master)/
-                }
+				branch 'master'
 			}
 			 
 			steps {
 				echo 'This process is for production'
+                script {
+                    sh BRAND_NAME == ~/(master)/              }
 			}
 		}
 	}
 	
 	post {
 		always {
-			echo "The result of this pipeline has sent to your mailbox"
-            		//删除当前目录
+			echo "The section will always be shown"
+            //删除当前目录
 			deleteDir()
 		}
 		
