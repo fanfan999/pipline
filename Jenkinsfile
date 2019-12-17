@@ -20,6 +20,7 @@ pipeline {
                 		sh 'echo BRANCH_NAME'
 				sh 'printenv'
 			}
+		}
 		
 		stage('Deploy for development') {
 			when {
