@@ -2,34 +2,34 @@ pipeline {
 	agent any
 	
 	options {
-		//skipStagesAfterUnstable()
+		skipStagesAfterUnstable()
 		
 		timeout(time:1, unit:'HOURS')
 	}
 	
 	environment {
-		def USERMAIL = "1058180192@qq.com;lei.fan@capgemini.com"
+		def USERMAIL = "1058180192@qq.com lei.fan@capgemini.com"
 		MAVEN_OPTS="-Xmx125m"
 	}
+
+    parameters {
+         booleanParam(name: 'Confirm', choices:'false\ntrue', defaultValue: true, description: 'Being Sure to begin pipeline') 
+    }
 	
 	stages {
 		
 		stage('Info') {
 			steps {
-				sh 'git branch'
-                		echo BRANCH_NAME
+                echo BRANCH_NAME
 				sh 'printenv'
 			}
 		}
 		
 		stage('Deploy for development') {
 			when {
-				branch 'dev'
-			}
-			
-			input {
-				message 'Deploy for deployment?'
-				ok 'yes'
+				expression {
+                    BRANCH_NAME == ~ /(dev)/
+                }
 			}
 			
 			steps {
@@ -41,11 +41,6 @@ pipeline {
 		stage('Deploy for production') {
 			when {
 				branch 'master'
-			}
-			
-			input {
-				message 'Deploy for production？'
-				ok 'yes'
 			}
 			 
 			steps {
