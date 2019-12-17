@@ -5,17 +5,15 @@ pipeline {
 		skipStagesAfterUnstable()
 		
 		timeout(time:1, unit:'HOURS')
+
+        timestapmps()
 	}
 	
 	environment {
-		def USERMAIL = "1058180192@qq.com lei.fan@capgemini.com"
+		def USERMAIL = "1058180192@qq.com;lei.fan@capgemini.com"
 		MAVEN_OPTS="-Xmx125m"
 	}
 
-    parameters {
-         choice(name: 'CHOICE', choices: ['true', 'false'], description: 'Pick something')
-    }
-	
 	stages {
 		
 		stage('Info') {
@@ -23,16 +21,40 @@ pipeline {
                 echo BRANCH_NAME
 				sh 'printenv'
 			}
+			
+		}
+		stage('Build') {
+			steps {
+				echo 'Starting building through maven'
+				sh 'mvn -B -DskipTests clean package'
+			}
+		}
+		
+		stage ('Test') {
+			steps {
+				echo 'Starting testing through sonarqube'
+				sh 'mvn sonar:sonar -Dsonar.projectKey=caas -Dsonar.host.url=http://sonar-sonarqube.devops:9000 -Dsonar.login=18525d48f80feb61692f63d0e378682e4a34c915'
+			}
+			
+			post {
+				always {
+                    echo 'showing downloadable file'
+					archiveArtifacts 'target/*.jar'
+				}
+			}
+			
 		}
 		
 		stage('Deploy for development') {
 			when {
-				expression {
-                    BRANCH_NAME == ~ /(dev)/
-                }
+				branch 'dev'
 			}
 			
 			steps {
+                input {
+				message 'Deploy for deployment?'
+				ok 'yes'
+			    }
 				echo 'This deploy process is for development'
 			}
 			
@@ -44,23 +66,23 @@ pipeline {
 			}
 			 
 			steps {
+                input {
+				message 'Deploy for production？'
+				ok 'yes'
+			    }
 				echo 'This process is for production'
-                script {
-                    echo 'sh BRAND_NAME == ~/(master)/'           
-                }
 			}
 		}
 	}
 	
 	post {
 		always {
-			echo "The section will always be shown"
+			echo "The result of this pipeline has sent to your mailbox"
             //删除当前目录
 			deleteDir()
 		}
 		
 		success {
-            echo 'success sending email'
 			script{
 				configFileProvider([configFile(fileId: 'caas-email-template-20191216',
 											   targetLocation: 'email.html', 
