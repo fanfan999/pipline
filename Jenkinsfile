@@ -40,7 +40,7 @@ pipeline {
 			
 			post {
 				always {
-                    echo 'showing downloadable file'
+                    			echo 'showing downloadable file'
 					archiveArtifacts 'target/*.jar'
 				}
 			}
@@ -53,10 +53,10 @@ pipeline {
 			}
 			
 			steps {
-                input {
-				message 'Deploy for deployment?'
-				ok 'yes'
-			    }
+                		input {
+					message "Deploy for deployment?"
+					ok "yes"
+			    	}
 				echo 'This deploy process is for development'
 			}
 			
@@ -68,10 +68,10 @@ pipeline {
 			}
 			 
 			steps {
-                input {
-				message 'Deploy for production？'
-				ok 'yes'
-			    }
+                		input {
+					message "Deploy for production？"
+					ok "yes"
+			    	}
 				echo 'This process is for production'
 			}
 		}
@@ -80,7 +80,7 @@ pipeline {
 	post {
 		always {
 			echo "The result of this pipeline has sent to your mailbox"
-            //删除当前目录
+            		//删除当前目录
 			deleteDir()
 		}
 		
