@@ -6,7 +6,7 @@ pipeline {
 		
 		timeout(time:1, unit:'HOURS')
 
-        timestapmps()
+        	timestapmps()
 	}
 	
 	environment {
@@ -18,8 +18,10 @@ pipeline {
 		
 		stage('Info') {
 			steps {
-                echo BRANCH_NAME
+                		echo BRANCH_NAME
 				sh 'printenv'
+				sh 'pwd'
+				sh 'ls -lh'
 			}
 			
 		}
