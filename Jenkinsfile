@@ -13,8 +13,7 @@ pipeline {
 	}
 
     parameters {
-         booleanParam(name: 'Confirm', defaultValue: true, description: 'Being Sure to begin pipeline')
-         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+         choice(name: 'CHOICE', choices: ['true', 'false'], defaultValue: true, description: 'Pick something')
     }
 	
 	stages {
@@ -47,7 +46,8 @@ pipeline {
 			steps {
 				echo 'This process is for production'
                 script {
-                    sh BRANCH_NAME == ~/(master)/              }
+                    echo 'sh BRAND_NAME == ~/(master)/'           
+                }
 			}
 		}
 	}
