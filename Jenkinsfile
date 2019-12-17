@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	options {
-		skipStagesAfterUnstable()
+		//skipStagesAfterUnstable()
 		
 		timeout(time:1, unit:'HOURS')
 	}
@@ -17,7 +17,7 @@ pipeline {
 		stage('Info') {
 			steps {
 				sh 'git branch'
-                		sh 'echo BRANCH_NAME'
+                		echo BRANCH_NAME
 				sh 'printenv'
 			}
 		}
