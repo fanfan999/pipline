@@ -47,7 +47,7 @@ pipeline {
 			steps {
 				echo 'This process is for production'
                 script {
-                    sh BRAND_NAME == ~/(master)/              }
+                    sh BRANCH_NAME == ~/(master)/              }
 			}
 		}
 	}
