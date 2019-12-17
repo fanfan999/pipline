@@ -17,7 +17,7 @@ pipeline {
 		stage('Info') {
 			steps {
 				sh 'git branch'
-                echo 'BRANCH_NAME'
+                		sh 'echo BRANCH_NAME'
 				sh 'printenv'
 			}
 		
@@ -56,7 +56,7 @@ pipeline {
 	post {
 		always {
 			echo "The result of this pipeline has sent to your mailbox"
-            //删除当前目录
+            		//删除当前目录
 			deleteDir()
 		}
 		
