@@ -40,7 +40,9 @@ pipeline {
 		
 		stage('Deploy for production') {
 			when {
-				branch 'master'
+				expression {
+                    BRANCH_NAME == ~ /(master)/
+                }
 			}
 			 
 			steps {
